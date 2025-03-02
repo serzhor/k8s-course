@@ -3,27 +3,6 @@
 #
 # Copyleft (c) by Denis Astahov 2020
 #---------------------------------------------------------------------
-apiVersion : apps/v1
-kind: Deployment
-metadata:
-  name: my-web-deployment
-  labels:
-    app : my-k8s-deployment
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      project: kgb
-  template:
-    metadata:
-      labels:
-        project: kgb   # Service will look for those PODS Labels!!!
-    spec:
-      containers:
-        - name : kgb-web
-          image: adv4000/k8sphp:latest
-          ports:
-            - containerPort: 80
 
 ---
 apiVersion: v1
@@ -33,12 +12,16 @@ metadata:
   labels:
     env  : prod
     owner: DenisAstahov
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: your-login.soft-infra.geoscan.ru
+    external-dns.alpha.kubernetes.io/ttl: 3600
 spec:
   selector:
-    project: kgb    # Selecting PODS with those Labels
+    project: cia    # Selecting PODS with those Labels
   ports:
     - name      : app-listener
       protocol  : TCP
       port      : 80  # Port on Load Balancer
       targetPort: 80  # Port on POD
+      nodePort  : 30110
   type: LoadBalancer

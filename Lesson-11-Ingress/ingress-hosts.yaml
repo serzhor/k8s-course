@@ -3,37 +3,41 @@
 #
 # Copyleft (c) by Denis Astahov 2021
 #---------------------------------------------------------------------
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-hosts
 
 spec:
   rules:
-  - host: www.adv-it.net
+  - host: test-app.soft-infra.geoscan.ru
     http:
       paths:
         - backend:
-           serviceName: main
-           servicePort: 80
+            service:
+              name: my-web-deployment-replicas
+              port: 
+                number: 80
+          path: /
+          pathType: Prefix
 
-  - host: web1.adv-it.net
+  - host: nginx.soft-infra.geoscan.ru
     http:
       paths:
         - backend:
-           serviceName: web1
-           servicePort: 80
-
-  - host: web2.adv-it.net
+            service:
+              name: nginx-app
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+  - host: tomcat.soft-infra.geoscan.ru
     http:
       paths:
         - backend:
-           serviceName: web2
-           servicePort: 80
-
-  - host: cat.adv-it.net
-    http:
-      paths:
-        - backend:
-           serviceName: tomcat
-           servicePort: 8080
+            service:
+              name: tomcat-app
+              port: 
+                number: 80
+          path: /
+          pathType: Prefix

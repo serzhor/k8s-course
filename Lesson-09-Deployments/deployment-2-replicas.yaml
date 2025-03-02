@@ -21,8 +21,9 @@ spec:
       labels:
         project: cia
     spec:
+      terminationGracePeriodSeconds: 0
       containers:
         - name : cia-web
-          image: adv4000/k8sphp:version1
+          image: cr.yandex/crprsf5vc5jju67kb3g9/test/appname2:latest
           ports:
             - containerPort: 80

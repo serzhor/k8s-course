@@ -10,6 +10,6 @@ metadata:
 spec:
   containers:
     - name : container-hello
-      image: nginx:latest
+      image: cr.yandex/crprsf5vc5jju67kb3g9/test/appname2:latest 
       ports:
         - containerPort: 80
